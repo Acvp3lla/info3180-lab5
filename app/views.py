@@ -33,10 +33,8 @@ def about():
 def secure_page():
     """Render a secure page on our website that only logged in users can access."""
     if not session.get('logged_in'):
+        flash('Login Required', 'danger')
         return redirect(url_for("login"))
-    form = LoginForm()
-    user = form.username.data
-    print(user)
     return render_template('secure_page.html')
 
 
@@ -47,12 +45,8 @@ def login():
         if form.username.data:
             username = form.username.data
             password = form.password.data
-            
             user = UserProfile.query.filter_by(username=username, password=password).first()
-            
             login_user(user)
-            
-            
             session['logged_in'] = True
             flash('Logged in successfully.', 'success')
             return redirect(url_for("secure_page"))
