@@ -52,6 +52,7 @@ def login():
             
             login_user(user)
             
+            
             session['logged_in'] = True
             flash('Logged in successfully.', 'success')
             return redirect(url_for("secure_page"))
